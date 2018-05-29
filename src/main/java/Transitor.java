@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 public class Transitor
@@ -43,9 +45,15 @@ public class Transitor
                             .addAttribute("number", row.getCell(1)
                                     .toString());
                 }
-                try (FileWriter fileWriter = new FileWriter("data.xml")) {
-                    XMLWriter writer = new XMLWriter(fileWriter);
-                    writer.write( document );
+//                如何将文件生成到指定的文件夹中
+                String folder = "C:\\Users\\Truman\\Desktop";
+//                folder.replace("\\\\", "\\");
+                System.out.println(folder);
+                try (FileWriter fileWriter = new FileWriter(folder + "\\data.xml")) {
+                    OutputFormat format = OutputFormat.createPrettyPrint();
+                    format.setIndentSize(10);
+                    XMLWriter writer = new XMLWriter(fileWriter, format);
+                    writer.write(document);
                     writer.close();
                 }
             }
